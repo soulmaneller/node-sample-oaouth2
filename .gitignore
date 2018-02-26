@@ -1,0 +1,4 @@
+.hg*
+node_modules/*
+docker/env/*
+config/*

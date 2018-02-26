@@ -1,0 +1,472 @@
+{
+	"info": {
+		"name": "Pomelo quiz",
+		"_postman_id": "5e544d4e-b6d4-1907-6433-279fe0a8ee00",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Error 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a59fad0-cdb1-4c42-a333-6e869a58810c",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Register success\", function () {",
+							"    pm.response.to.have.status( 404 );",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/err",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"err"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Error 400",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0f4edcb5-0686-4e36-9128-492d1bec1047",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Register success\", function () {",
+							"    pm.response.to.have.status( 400 );",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"register"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "088716cb-511e-48e9-a648-641e94f19e32",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Register success\", function () {",
+							"    pm.response.to.have.status( 200 );",
+							"    pm.expect( pm.response.to.have.jsonBody( 'status', 'ok' ));",
+							"    pm.expect( pm.response.to.have.jsonBody( 'msg', 'Success' ));",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "sample9",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "sample9",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Sample 009",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"register"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8e26adfb-fbae-4d63-b539-9a051e307686",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Login success\", function () { ",
+							"    pm.response.to.have.status( 200 );",
+							"    pm.expect( pm.response.to.have.jsonBody( 'data' ));",
+							"    pm.expect( pm.response.to.have.jsonBody( 'data.accessToken' ));",
+							"    pm.expect( pm.response.to.have.jsonBody( 'data.refreshToken' ));",
+							"    pm.expect( pm.response.to.have.jsonBody( 'data.user' ));",
+							"});",
+							"",
+							"pm.globals.set(\"accessToken\", \"Bearer \" + pm.response.json().data.accessToken );"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "sample9",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "sample9",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "0001",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/oauth/token",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"oauth",
+						"token"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Get user's profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b8da3726-a8bf-47dd-b37b-09a54742caed",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Get user profile\", function () { ",
+							"    pm.response.to.have.status( 200 );",
+							"    pm.expect( pm.response.to.have.jsonBody( 'data' ));",
+							"    pm.expect( pm.response.to.have.jsonBody( 'data.id' ));",
+							"    pm.expect( pm.response.to.have.jsonBody( 'data.name' ));",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{accessToken}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ea04c81e-621e-4f40-9aab-bdc0f8afcf23",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Your test name\", function () {",
+							"    pm.response.to.have.status( 200 );",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect( jsonData.status ).to.eql( 'ok' );",
+							"    pm.expect( jsonData.msg ).to.eql( 'Success' );",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{accessToken}}"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "sample1",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "sample1",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "grant_type",
+							"value": "password",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "New Name",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Check user data is updated",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "316e826e-bde4-4937-8b26-54c5d2a27913",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Data is updated\", function () { ",
+							"    pm.response.to.have.status( 200 );",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect( jsonData.status ).to.eql( 'ok' );",
+							"    pm.expect( jsonData.data.name ).to.eql( 'New Name' );",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{accessToken}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "617f1e21-83f7-4c92-878c-e61fada11dae",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Data is updated\", function () { ",
+							"    pm.response.to.have.status( 200 );",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect( jsonData.status ).to.eql( 'ok' );",
+							"    pm.expect( jsonData.msg ).to.eql( 'Success' );",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{accessToken}}"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/user",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "accessToken",
+				"type": "any"
+			},
+			{
+				"key": "tokenType",
+				"type": "any"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "cf3b164a-9548-4d2c-847b-665e1961d3e0",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "63d34ebd-a269-49bb-955e-eaf5c1a11c44",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

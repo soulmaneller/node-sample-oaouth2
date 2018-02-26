@@ -1,0 +1,9 @@
+[
+  {
+    "uid": "prolevel",
+    "append": true,
+    "watch": true,
+    "script": "index.js",
+    "sourceDir": "/app"
+  }
+]

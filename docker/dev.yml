@@ -1,0 +1,55 @@
+version: '2'
+services:
+    # initial_db:
+    #     image: soulmaneller/node-alpine
+    #     command: npm run db:dev
+    #     depends_on:
+    #         - mysql
+    #     volumes:
+    #         - ..:/app
+    #     links:
+    #         - mysql
+
+    nodejs:
+        image: soulmaneller/node-alpine
+        command: forever forever.json
+        hostname: prolevel_api
+        depends_on:
+            - mysql
+            - redis
+            # - initial_db
+        volumes:
+            - ..:/app
+        links:
+            - mysql
+            - redis
+        ports:
+            - 3000:3000
+        environment:
+            NODE_ENV: dev
+
+    mysql:
+        image: mysql
+        volumes:
+            - ./env/mysql:/var/lib/mysql
+            # - ./env-config/mysql:/etc/mysql/conf.d
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: sample
+            MYSQL_USER: test
+            MYSQL_PASSWORD: test
+        ports:
+            - 3306:3306
+    redis:
+        image: redis
+        volumes:
+            - ./env/redis:/data
+        ports:
+            - 6379:6379
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - mysql:db
+        ports:
+            - 8000:80
